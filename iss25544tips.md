@@ -1,3 +1,5 @@
+[Audrie Gordon](https://www.youtube.com/watch?v=lhE9QfcoYYM&list=LL0g8vfZ0StQCzN4W6-szw0w&index=2&t=0s)
+
 [My ISS App](https://apps.powerapps.com/play/903d427e-017f-45c4-a47d-f80cf7b3e151?tenantId=800d472c-8288-4f27-8978-f726a7a3d1f0)
 
 [ISS Public API](https://wheretheiss.at/w/developer)
