@@ -18,5 +18,5 @@
 
 
 ## Resources
-* Simple: (https://towardsdatascience.com/streaming-twitter-data-into-a-mysql-database-d62a02b050d6)
-* Adv: [spark-twitter-streaming-sample.ipynb](https://github.com/microsoft/sql-server-samples/blob/master/samples/features/sql-big-data-cluster/spark/data-loading/spark-twitter-streaming-sample.ipynb)
+* Simple: [Streaming Twitter via T-SQL](https://towardsdatascience.com/streaming-twitter-data-into-a-mysql-database-d62a02b050d6)
+* Adv: [Streaming Twitter via Spark](https://github.com/microsoft/sql-server-samples/blob/master/samples/features/sql-big-data-cluster/spark/data-loading/spark-twitter-streaming-sample.ipynb)
