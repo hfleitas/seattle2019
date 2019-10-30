@@ -1,0 +1,26 @@
+If(
+    txtAddress.Text = "Address",
+    BingMaps.GetMapV2(
+        "Road",
+        13,
+        Location.Latitude, 
+        Location.Longitude,
+        {
+            pushpinLatitude: Location.Latitude,
+            pushpinLongitude: Location.Longitude,
+            pushpinIconStyle: 37
+        }
+    ),
+    BingMaps.GetMapV2(
+        "Road",
+        15,
+        vAddress.point.coordinates.latitude,
+        vAddress.point.coordinates.longitude,
+        {
+            pushpinLatitude: vAddress.point.coordinates.latitude,
+            pushpinLongitude: vAddress.point.coordinates.longitude,
+            pushpinIconStyle: 86,
+            pushpinLabel: txtName.Text
+        }
+    )
+)
