@@ -14,6 +14,8 @@
 ![1cover.png](https://github.com/hfleitas/seattle2019/blob/master/1cover.png "1cover")
 
 2. [Real-time Sentiment Prediction in SQL Server](https://www.pass.org/summit/2019/Learn/SessionDetails.aspx?name=real-time-sentiment-prediction-in-sql-server&sid=90987) (Development)
+![2cover.png](https://github.com/hfleitas/seattle2019/blob/master/2cover.png "2cover")
+
 
 ## Resources
 * Simple: (https://towardsdatascience.com/streaming-twitter-data-into-a-mysql-database-d62a02b050d6)
