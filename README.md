@@ -1,7 +1,6 @@
 # PASS Summit 2019
-Seattle 2019
-
-[github.com/hfleitas/seattle19](https://github.com/hfleitas/seattle19)
+[pass.org/summit/2019](https://www.pass.org/summit/2019/Home.aspx)
+[github.com/hfleitas/seattle2019](https://github.com/hfleitas/seattle19)
 
 ## Speaker Details
 [Speaker Details](https://www.pass.org/summit/2019/Learn/SpeakerDetails.aspx?spid=4116)
