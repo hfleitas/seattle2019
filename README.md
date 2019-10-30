@@ -4,13 +4,16 @@ Seattle 2019
 [github.com/hfleitas/seattle19](https://github.com/hfleitas/seattle19)
 
 ## Speaker Details
+![Gravatar](https://s.gravatar.com/avatar/a2f601b7a0fabf67b0caa008f9d93988?s=80
+ "Hiram")
 [Speaker Details](https://www.pass.org/summit/2019/Learn/SpeakerDetails.aspx?spid=4116)
 
 ## General Session (75 minutes):
 
-[Real-time Sentiment Prediction in SQL Server](https://www.pass.org/summit/2019/Learn/SessionDetails.aspx?name=real-time-sentiment-prediction-in-sql-server&sid=90987) Development
+1. [The Power Platform Game Changer](https://www.pass.org/summit/2019/Learn/SessionDetails.aspx?name=the-power-platform-game-changer&sid=92321) Development
+![1cover.png](https://github.com/hfleitas/seattle2019/blob/master/1cover.png "1cover")
 
-[The Power Platform Game Changer](https://www.pass.org/summit/2019/Learn/SessionDetails.aspx?name=the-power-platform-game-changer&sid=92321) Development
+2. [Real-time Sentiment Prediction in SQL Server](https://www.pass.org/summit/2019/Learn/SessionDetails.aspx?name=real-time-sentiment-prediction-in-sql-server&sid=90987) Development
 
 ## Resources
 Simple: (https://towardsdatascience.com/streaming-twitter-data-into-a-mysql-database-d62a02b050d6)
