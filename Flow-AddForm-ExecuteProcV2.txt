@@ -1,0 +1,31 @@
+{
+    "inputs": {
+        "host": {
+            "connection": {
+                "name": "@json(decodeBase64(triggerOutputs().headers['X-MS-APIM-Tokens']))['$connections']['shared_sql']['connectionId']"
+            }
+        },
+        "method": "post",
+        "body": {
+            "BalanceDue": "@triggerBody()['Executestoredprocedure(V2)_BalanceDue']",
+            "BillTo": "@triggerBody()['Executestoredprocedure(V2)_BillTo']",
+            "Date": "@triggerBody()['Executestoredprocedure(V2)_Date']",
+            "DueDate": "@triggerBody()['Executestoredprocedure(V2)_DueDate']",
+            "From": "@triggerBody()['Executestoredprocedure(V2)_From']",
+            "Invoice": "@triggerBody()['Executestoredprocedure(V2)_Invoice']",
+            "Shipping": "@triggerBody()['Executestoredprocedure(V2)_Shipping']",
+            "Subtotal": "@triggerBody()['Executestoredprocedure(V2)_Subtotal']",
+            "Tax": "@triggerBody()['Executestoredprocedure(V2)_Tax']",
+            "Total": "@triggerBody()['Executestoredprocedure(V2)_Total']",
+            "Rate": "@triggerBody()['Executestoredprocedure(V2)_Rate']",
+            "Quantity": "@triggerBody()['Executestoredprocedure(V2)_Quantity']",
+            "Item": "@triggerBody()['Executestoredprocedure(V2)_Item']",
+            "Amount": "@triggerBody()['Executestoredprocedure(V2)_Amount']"
+        },
+        "path": "/v2/datasets/@{encodeURIComponent(encodeURIComponent('default'))},@{encodeURIComponent(encodeURIComponent('default'))}/procedures/@{encodeURIComponent(encodeURIComponent('[dbo].[AddForm]'))}",
+        "authentication": {
+            "type": "Raw",
+            "value": "@json(decodeBase64(triggerOutputs().headers['X-MS-APIM-Tokens']))['$ConnectionKey']"
+        }
+    }
+}

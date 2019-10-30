@@ -1,0 +1,30 @@
+UpdateContext({vOutLead:AddLead.Run(txtName.Text, txtEmail.Text, txtAddress.Text)});UpdateContext({vPopUp:true})
+
+UpdateContext(
+	{vOutForm:AddForm.Run(
+		lblBalanceDue.Text,
+		lblBillTo.Text,
+		lblDate.Text,
+		lblDueDate.Text,
+		lblFrom.Text,
+		lblInvoice.Text,
+		lblShipping.Text,
+		lblSubtotal.Text,
+		lblTax.Text,
+		lblTotal.Text,
+		colRate,
+		colQuantity,
+		colItem,
+		colAmount
+		)
+	}
+);
+UpdateContext({vPopUpPDF: true})
+
+UpdateContext(
+	{vOutForm:AddForm.Run(
+		lblBalanceDue.Text
+		)
+	}
+);
+UpdateContext({vPopUpPDF: true})
