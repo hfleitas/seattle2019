@@ -1,0 +1,25 @@
+The Power Platform Game Changer
+Speaker: Hiram Fleitas
+Duration: 75 minutes
+Level: 300
+Stream: Data Management
+Audience: IT Pro, Developer, Line of Business Manager/Director/Executive
+Technology Focus: Development
+Track: Build
+This is a game changing session. I'll show you how to go from zero-to-hero by building the business app you need, literally in minutes, using PowerApps, Flow, SQL Server, Power BI, and Cortana. Then, in a single-shot, securely publish and share your app to iOS, Android, Web and Windows 10.
+
+AGENDA:
+0. Intro to PowerApps
+1. Azure Data Studio Notebook
+2. Create 3 PowerApps
+3. Create Multiple Flows (Input, SQL Server, Variables, Respond, Tests)
+4. Data Gateway 
+5. Cortana
+6. Securely Publish & Share with Enterprise Governance controls.
+7. Forms - Ai builder
+8. Row-Level-Security (RLS)
+9. Approvals (On SQL Server)
+10. International Space Station (Web HTTP API)
+
+I look forward to seeing you there!
+Prerequisites: Basic knowledge of Power BI or Power Platform, T-SQL, and Excel formulas.

@@ -1,0 +1,23 @@
+//onstart
+Set(apiresponse,iss25544.Run()); 
+Set(vZoom,3);
+
+//imgMap
+BingMaps.GetMapV2(
+    "AerialWithLabels",
+    If(IsBlank(vZoom),3,vZoom),
+    apiresponse.latitude,
+    apiresponse.longitude,
+    {
+        pushpinLabel: apiresponse.name & " " & apiresponse.id,
+        pushpinIconStyle: 38,
+        pushpinLatitude: apiresponse.latitude,
+        pushpinLongitude: apiresponse.longitude
+    }
+)
+
+//imgDay
+//OnSelect
+UpdateContext({apiresponse:iss25544.Run()}); 
+//Image
+If(apiresponse.visibility="daylight",issday,issnight)

@@ -1,0 +1,136 @@
+//https://api.wheretheiss.at/v1/satellites/25544/positions?timestamps=1572543100,1572543200&units=miles
+
+//Content
+
+[
+  {
+    "name": "iss",
+    "id": 25544,
+    "latitude": -19.757754585398,
+    "longitude": 85.174053784287,
+    "altitude": 263.24885595678,
+    "velocity": 17126.136658615,
+    "visibility": "eclipsed",
+    "footprint": 2812.3422919896,
+    "timestamp": 1572543100,
+    "daynum": 2458788.2303241,
+    "solar_lat": -14.176296745177,
+    "solar_lon": 272.99325928563,
+    "units": "miles"
+  },
+  {
+    "name": "iss",
+    "id": 25544,
+    "latitude": -14.827261659794,
+    "longitude": 89.145268646097,
+    "altitude": 262.55367119491,
+    "velocity": 17127.527871436,
+    "visibility": "eclipsed",
+    "footprint": 2808.8204979467,
+    "timestamp": 1572543200,
+    "daynum": 2458788.2314815,
+    "solar_lat": -14.176670803951,
+    "solar_lon": 272.57658146221,
+    "units": "miles"
+  }
+]
+
+//Schema
+{
+  "type": "array",
+  "items": {
+    "type": "object",
+    "properties": {
+      "name": {
+        "type": "string"
+      },
+      "id": {
+        "type": "integer"
+      },
+      "latitude": {
+        "type": "number"
+      },
+      "longitude": {
+        "type": "number"
+      },
+      "altitude": {
+        "type": "number"
+      },
+      "velocity": {
+        "type": "number"
+      },
+      "visibility": {
+        "type": "string"
+      },
+      "footprint": {
+        "type": "number"
+      },
+      "timestamp": {
+        "type": "integer"
+      },
+      "daynum": {
+        "type": "number"
+      },
+      "solar_lat": {
+        "type": "number"
+      },
+      "solar_lon": {
+        "type": "number"
+      },
+      "units": {
+        "type": "string"
+      }
+    },
+    "required": [
+      "name",
+      "id",
+      "latitude",
+      "longitude",
+      "altitude",
+      "velocity",
+      "visibility",
+      "footprint",
+      "timestamp",
+      "daynum",
+      "solar_lat",
+      "solar_lon",
+      "units"
+    ]
+  }
+}
+
+//Output 
+//Status code 200
+//Body
+[
+  {
+    "name": "iss",
+    "id": 25544,
+    "latitude": -19.757754585398,
+    "longitude": 85.174053784287,
+    "altitude": 263.24885595678,
+    "velocity": 17126.136658615,
+    "visibility": "eclipsed",
+    "footprint": 2812.3422919896,
+    "timestamp": 1572543100,
+    "daynum": 2458788.2303241,
+    "solar_lat": -14.176296745177,
+    "solar_lon": 272.99325928563,
+    "units": "miles"
+  },
+  {
+    "name": "iss",
+    "id": 25544,
+    "latitude": -14.827261659794,
+    "longitude": 89.145268646097,
+    "altitude": 262.55367119491,
+    "velocity": 17127.527871436,
+    "visibility": "eclipsed",
+    "footprint": 2808.8204979467,
+    "timestamp": 1572543200,
+    "daynum": 2458788.2314815,
+    "solar_lat": -14.176670803951,
+    "solar_lon": 272.57658146221,
+    "units": "miles"
+  }
+]
