@@ -1,0 +1,52 @@
+Body 
+
+{
+  "responses": [
+    {
+      "responder": {
+        "id": "1d75c53b-2f24-4c91-b0af-24425770b160",
+        "displayName": "Hiram Fleitas",
+        "email": "hiram@fleitasarts.com",
+        "tenantId": "800d472c-8288-4f27-8978-f726a7a3d1f0",
+        "userPrincipalName": "hiram@fleitasarts.com"
+      },
+      "requestDate": "2019-10-31T04:20:51Z",
+      "responseDate": "2019-10-31T04:21:13Z",
+      "approverResponse": "Approve",
+      "comments": "looks good thx!"
+    }
+  ],
+  "responseSummary": "Approver: Hiram Fleitas, hiram@fleitasarts.com\r\nResponse: Approve\r\nRequest Date: Thursday, October 31, 2019 4:20:51 AM\r\nResponse Date: Thursday, October 31, 2019 4:21:13 AM",
+  "completionDate": "2019-10-31T04:21:13Z",
+  "outcome": "Approve",
+  "name": "7b6dd67a-0058-4a41-a736-28ebe0505104",
+  "title": "Please Approve/Reject FormId 17",
+  "details": "A new invoice has been created.<br />\nBalanceDue: 1013.5<br />\nInvoice: <br />\nFrom: <br />\nBillTo: <br />\nItem: <br />\n",
+  "requestDate": "2019-10-31T04:20:50Z"
+}
+
+
+Resonse summary
+
+Approver: Hiram Fleitas, hiram@fleitasarts.com
+Response: Approve
+Request Date: Thursday, October 31, 2019 4:20:51 AM
+Response Date: Thursday, October 31, 2019 4:21:13 AM
+
+Responses
+
+[
+  {
+    "responder": {
+      "id": "1d75c53b-2f24-4c91-b0af-24425770b160",
+      "displayName": "Hiram Fleitas",
+      "email": "hiram@fleitasarts.com",
+      "tenantId": "800d472c-8288-4f27-8978-f726a7a3d1f0",
+      "userPrincipalName": "hiram@fleitasarts.com"
+    },
+    "requestDate": "2019-10-31T04:20:51Z",
+    "responseDate": "2019-10-31T04:21:13Z",
+    "approverResponse": "Approve",
+    "comments": "looks good thx!"
+  }
+]
