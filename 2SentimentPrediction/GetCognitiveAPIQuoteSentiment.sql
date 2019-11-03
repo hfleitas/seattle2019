@@ -6,7 +6,7 @@ as
 	set @py = N'import requests, pprint as pr
 from pandas.io.json import json_normalize
 
-subscription_key = "3f2a24704b464e03a804cc0d0d916172" 
+subscription_key = "mykey" 
 text_analytics_base_url = "https://eastus2.api.cognitive.microsoft.com/text/analytics/v2.0/"
 sentiment_url = text_analytics_base_url + "sentiment"
 
