@@ -97,7 +97,7 @@ go
 drop table if exists models
 go
 create table models (
-	 language		varchar(30) not null default('Python')
+	 language		varchar(30) not null --default('Python')
 	,model_name		varchar(30) not null
 	,model			varbinary(max) 
 	,create_time	datetime default(getdate())
@@ -183,18 +183,10 @@ from microsoftml import rx_predict
 from revoscalepy import rx_data_step 
 import pickle
 
-## The input data from the query in @input_data_1 is populated in test_data
-## We are selecting 10% of the entire dataset for testing the model
-
-## Unserialize the model
 model = pickle.loads(model_bin)
-
-## Use the rx_logistic_regression model 
 predictions = rx_predict(model = model, data = test_data, extra_vars_to_write = ["pr_review_content"], overwrite = True)
 
-## Converting to output data set
 result = rx_data_step(predictions)
-
 ## print(result)';
  
 	exec sp_execute_external_script @language = N'Python'
