@@ -213,15 +213,11 @@ create or alter proc CreatePyModelRealtimeScoringOnly as
 	set @train_script = N'
 from microsoftml import rx_logistic_regression, featurize_text, n_gram
 from revoscalepy import rx_serialize_model, RxOdbcData, rx_write_object, RxInSqlServer, rx_set_compute_context, RxLocalSeq
-#import pickle
 
 connection_string = "Driver=SQL Server;Server=localhost;Database=tpcxbb_1gb;Trusted_Connection=true;"
 dest = RxOdbcData(connection_string, table = "models")
  
 training_data["tag"] = training_data["tag"].astype("category")
-
-#ngramLength=2: include not only "Word1", "Word2", but also "Word1 Word2"
-#weighting="TfIdf": Term frequency & inverse document frequency
 
 modelpy = rx_logistic_regression(formula = "tag ~ features",
 								 data = training_data, 
@@ -231,9 +227,7 @@ modelpy = rx_logistic_regression(formula = "tag ~ features",
 															   word_feature_extractor=n_gram(2, weighting="TfIdf"))],
 								 train_threads=1)
 
-## Serialize and write the model
 modelbin = rx_serialize_model(modelpy, realtime_scoring_only = True)
-#modelbin = pickle.dumps(model)
 rx_write_object(dest, key_name="model_name", key="RevoMMLRealtimeScoring", value_name="model", value=modelbin, serialize=False, compress=None, overwrite=False)'; --overwrite=false on 2019, true on 2017.
 
 	exec sp_execute_external_script @language = N'Python'
