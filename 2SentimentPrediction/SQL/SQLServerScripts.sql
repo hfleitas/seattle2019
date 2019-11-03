@@ -235,10 +235,7 @@ rx_write_object(dest, key_name="model_name", key="RevoMMLRealtimeScoring", value
 		,@input_data_1 = N'select * from product_reviews_training_data'
 		,@input_data_1_name = N'training_data'
 go
-
--- STEP 9 Execute the stored procedure that creates and saves the machine learning model in a table
 exec  CreatePyModelRealtimeScoringOnly; --00:01:14.560 desktop, 00:02:40.351 laptop.
---Take a look at the model object saved in the model table
 select *, datalength(model) as Datalen from dbo.models; --(6MB w/rx_write_object vs 55MB w/pickle.dump)
 GO
 -- incase of OutOfMemoryException: https://docs.microsoft.com/sql/advanced-analytics/r/how-to-create-a-resource-pool-for-r?view=sql-server-2017
