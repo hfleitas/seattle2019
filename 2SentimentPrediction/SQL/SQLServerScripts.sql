@@ -1,6 +1,4 @@
 -- blog: https://blogs.msdn.microsoft.com/sqlserverstorageengine/2017/11/01/sentiment-analysis-with-python-in-sql-server-machine-learning-services/
--- Added train_threads=1 to [create_text_classification_model] for Memory Error in 2019ctp2. 
--- To fix "path name too long" added os.putenv("TMP", os.path.join("temp")) After import platform line in C:\Program Files\Microsoft SQL Server\MSSQL15.MSSQLSERVER\PYTHON_SERVICES\Lib\site-packages\revoscalepy\__init__.py, then restarted LaunchPad svc.
 --  + --------------------- +
 --  | 1. restore sample db. |
 --  + --------------------- +
@@ -38,13 +36,7 @@ go
 -- Restart SQL Service & LAUNCHPAD.
 -- Run PS as admin: .\Install-MLModels.ps1 MSSQLSERVER
 -- Install Latest SQL Server CU, Reboot.
--- Run CMD as admin: FixPath.cmd
--- Verify WORKING_DIRECTORY in ...\MSSQL\Binn\pythonlauncher.config 
 -- Run CMD as admin: AddToSQL-PreTrainedModels.cmd. It downloads & installs the pre-trained models.
-
-/* Other Notes*/
--- upgrade/bind instance https://docs.microsoft.com/sql/advanced-analytics/r/use-sqlbindr-exe-to-upgrade-an-instance-of-sql-server
--- install python libraries interpreter https://docs.microsoft.com/machine-learning-server/install/python-libraries-interpreter
 
 --  + ------------------------ +
 --  | 2. use pre-trained model | 
@@ -86,37 +78,26 @@ go
 --  + -----------------+
 -- The below examples test a negative and a positive review text
 exec GetSentiment N'These are not a normal stress reliever. First of all, they got sticky, hairy and dirty on the first day I received them. Second, they arrived with tiny wrinkles in their bodies and they were cold. Third, their paint started coming off. Fourth when they finally warmed up they started to stick together. Last, I thought they would be foam but, they are a sticky rubber. If these were not rubber, this review would not be so bad.';
-go --0.424483060836792	Negative
 exec GetSentiment N'These are the cutest things ever!! Super fun to play with and the best part is that it lasts for a really long time. So far these have been thrown all over the place with so many of my friends asking to borrow them because they are so fun to play with. Super soft and squishy just the perfect toy for all ages.'
-go --0.869342148303986	Positive
 exec GetSentiment N'I really did not like the taste of it' 
-go --0.46178987622261	Negative
 exec GetSentiment N'It was surprisingly quite good!'
-go --0.960192441940308	Positive
 exec GetSentiment N'I will never ever ever go to that place again!!' 
-go --0.310343533754349	Negative
 exec GetSentiment N'Destiny is a gift. Some go their entire lives, living existence as a quiet desperation. Never learning the truth that what feels as though a burden pushing down upon our shoulders, is actually, a sense of purpose that lifts us to greater heights. Never forget that fear is but the precursor to valor, that to strive and triumph in the face of fear, is what it means to be a hero. Don''t think, Master Jim. Become!'
 --0.5	Negative. Why...Not enough?
 -- https://azure.microsoft.com/en-us/services/cognitive-services/text-analytics/ 
 -- Language: English, Sentiment: 78%.
 -- Key phrases: face of fear, existence, triumph, valor, sense of purpose, entire lives, quiet desperation, shoulders, greater heights, precursor, Destiny, gift, Master Jim, burden, truth, hero. 
 go
-/* 2019ctp2.0
-Msg 39004, Level 16, State 20, Line 88
-A 'Python' script error occurred during execution of 'sp_execute_external_script' with HRESULT 0x80004004.
-*/
+
 --  + ------------------------------------ +
 --  | 4. create schema to train own model. |
 --  + ------------------------------------ +
 use [tpcxbb_1gb]
 go
---**************************************************************
--- STEP 1 Create a table for storing the machine learning model
---**************************************************************
 drop table if exists models
 go
 create table models (
-	 language		varchar(30) not null
+	 language		varchar(30) not null default('Python')
 	,model_name		varchar(30) not null
 	,model			varbinary(max) 
 	,create_time	datetime default(getdate())
@@ -125,11 +106,8 @@ create table models (
 )
 go
 
--- STEP 2 Look at the dataset we will use in this sample
--- Tag is a label indicating the sentiment of a review. These are actual values we will use to train the model
--- For training purposes, we will use 90% percent of the data.
--- For testing / scoring purposes, we will use 10% percent of the data.
-
+drop view if exists product_reviews_training_data;
+go
 create or alter view product_reviews_training_data
 as
 	select	top(select cast(count(*)*.9 as int) from product_reviews)
@@ -141,6 +119,8 @@ as
 	from	product_reviews;
 go
 
+drop view if exists product_reviews_test_data;
+go
 create or alter view product_reviews_test_data
 as 
 	select	top(select cast(count(*)*.1 as int) from product_reviews)
@@ -152,7 +132,6 @@ as
 	from	product_reviews;
 go
 
--- STEP 3 Create a stored procedure for training a text classifier model for product review sentiment classification (Positive, Negative, Neutral)
 -- 1 = Negative, 2 = Neutral, 3 = Positive
 create or alter proc create_text_classification_model
 as
@@ -190,20 +169,15 @@ modelbin = pickle.dumps(model)';
 	delete from models where model_name = 'rx_logistic_regression' and language = 'Python';
 	insert into models (language, model_name, model) values('Python', 'rx_logistic_regression', @model);
 go
--- STEP 4 Execute the stored procedure that creates and saves the machine learning model in a table
 exec create_text_classification_model;
---Take a look at the model object saved in the model table
 select * from dbo.models;
 go
 
--- STEP 5 --Proc that uses the model we just created to predict/classify the sentiment of product reviews
 create or alter proc predict_review_sentiment 
 as
-	-- text classifier for online review sentiment classification (Positive, Negative, Neutral)
 	declare @model_bin varbinary(max), @prediction_script nvarchar(max);
 	select @model_bin = model from dbo.models where model_name = 'rx_logistic_regression' and language = 'Python';
  
-	-- The Python script we want to execute
 	set @prediction_script = N'
 from microsoftml import rx_predict
 from revoscalepy import rx_data_step 
@@ -232,41 +206,18 @@ result = rx_data_step(predictions)
 		,@model_bin = @model_bin
 	with result sets(("Review" nvarchar(max), "PredictedLabel" float, "Predicted_Score_Negative" float, "Predicted_Score_Neutral" float, "Predicted_Score_Positive" float)); 
 go
---added PredictedLablel (seen msgs tab with print(result)).
---use print(result) to see dataframe columns to match result set columns.
 
--- STEP 6 Execute the multi class prediction using the model we trained earlier
 -- The predicted score of Negative means the statement is (x percent Negative), and so on for the other sentiment categories. 
--- Ie. since the�re all tag 3 positive, they will have very low negative scores, low neutral scores and very high positive scores. 
-exec predict_review_sentiment --13sec 8999 rows.
---EXECUTE statement failed because its WITH RESULT SETS clause specified 5 column(s) for result set number 1, but the statement sent 6 column(s) at run time.
---fixed by seeing actual output using print(result) in messages tab.
+-- Ie. since there all tag 3 positive, they will have very low negative scores, low neutral scores and very high positive scores. 
+exec predict_review_sentiment
 go
--- STEP 7 Use TSQL PREDICT with a serialized model that uses realtimeScoring = True.
-create or alter proc uspPredictSentiment 
-@model varchar(30) = 'rx_logistic_regression'
-as
-begin
-	declare @model_bin varbinary(max);
-	select @model_bin = model from dbo.models where model_name = @model and language = 'Python';
-	
-	select	p.pr_review_content, p.score
-	from	predict(model=@model_bin, data = product_reviews_test_data as d)
-	with	(pr_review_content nvarchar(max), score float) as p;
-end
-go
-exec uspPredictSentiment
--- That model is an mml model (Microsoft ML). And PREDICT does not support mml models at this time.
-/*Msg 39051, Level 16, State 2, Procedure uspPredictSentiment, Line 250
-Error occurred during execution of the builtin function 'PREDICT' with HRESULT 0x80070057. Model is corrupt or invalid.*/
-go
--- STEP 8 Same proc to train but serialize model for realtimeScoringOnly.
+
+-- Create new model for realtime_scoring_only.
 create or alter proc CreatePyModelRealtimeScoringOnly as
 	
 	declare @model varbinary(max), @train_script nvarchar(max);
 	delete top(1) from models where model_name = 'RevoMMLRealtimeScoring' and language = 'Py';
 	
-	--The Python script we want to execute
 	set @train_script = N'
 from microsoftml import rx_logistic_regression, featurize_text, n_gram
 from revoscalepy import rx_serialize_model, RxOdbcData, rx_write_object, RxInSqlServer, rx_set_compute_context, RxLocalSeq
@@ -298,9 +249,7 @@ rx_write_object(dest, key_name="model_name", key="RevoMMLRealtimeScoring", value
 		,@input_data_1 = N'select * from product_reviews_training_data'
 		,@input_data_1_name = N'training_data'
 go
--- due to not null and pk from previous def.
-alter table models add default 'Py' for language; 
-go
+
 -- STEP 9 Execute the stored procedure that creates and saves the machine learning model in a table
 exec  CreatePyModelRealtimeScoringOnly; --00:01:14.560 desktop, 00:02:40.351 laptop.
 --Take a look at the model object saved in the model table
