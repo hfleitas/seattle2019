@@ -1,0 +1,24 @@
+//onstart
+Set(vZoom,3);
+Set(apiresponse,iss25544.Run()); 
+
+//map
+BingMaps.GetMapV2(
+    "AerialWithLabels",
+    If(IsBlank(vZoom),3,vZoom),
+    apiresponse.latitude,
+    apiresponse.longitude,
+    {
+        pushpinLabel: apiresponse.name & " " & apiresponse.id,
+        pushpinIconStyle: 38,
+        pushpinLatitude: apiresponse.latitude,
+        pushpinLongitude: apiresponse.longitude
+    }
+);
+
+
+//zoom +
+Set(vZoom, vZoom + 1);
+
+//zoom -
+Set(vZoom, vZoom - 1);
