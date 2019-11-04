@@ -1,8 +1,8 @@
 -- blog: https://blogs.msdn.microsoft.com/sqlserverstorageengine/2017/11/01/sentiment-analysis-with-python-in-sql-server-machine-learning-services/
+-- The database used for this sample can be downloaded here: https://sqlchoice.blob.core.windows.net/sqlchoice/static/tpcxbb_1gb.bak
 --  + --------------------- +
 --  | 1. restore sample db. |
 --  + --------------------- +
---The database used for this sample can be downloaded here: https://sqlchoice.blob.core.windows.net/sqlchoice/static/tpcxbb_1gb.bak
 restore filelistonly from disk = 'c:\users\hfleitas\downloads\tpcxbb_1gb.bak'
 go
 restore database [tpcxbb_1gb] from disk = 'c:\users\hfleitas\downloads\tpcxbb_1gb.bak' with replace,
@@ -240,29 +240,6 @@ go
 exec  CreatePyModelRealtimeScoringOnly; --00:01:14.560 desktop, 00:02:40.351 laptop.
 select *, datalength(model) as Datalen from dbo.models; --(6MB w/rx_write_object vs 55MB w/pickle.dump)
 go
--- incase of OutOfMemoryException: https://docs.microsoft.com/sql/advanced-analytics/r/how-to-create-a-resource-pool-for-r?view=sql-server-2017
--- 1. Limit SQL Server memory usage to 60% of the value in the 'max server memory' setting.
--- 2. Increase Limit memory by external processes to 40% of total computer resources. It defaults to 20%.
--- 3. Reconfigure and restart RG to force changes or restart sql svc.
---ALTER RESOURCE POOL "default" WITH (max_memory_percent = 60); --hmmm...maybe not.
---ALTER EXTERNAL RESOURCE POOL "default" WITH (max_memory_percent = 40); --okay
---ALTER RESOURCE GOVERNOR RECONFIGURE;
-go
-
-
-/*
-exec uspPredictSentiment @model='RevoMMLRealtimeScoring'
-go
-Msg 39051, Level 16, State 2, Procedure uspPredictSentiment, Line 304
-Error occurred during execution of the builtin function 'PREDICT' with HRESULT 0x80070057. Model is corrupt or invalid.
-
-This is currently not supported.
-'rx_logistic_regression' is an algorithm from the mml package, not revoscalepy package.
-Cannot demo TSQL PREDICT with a model from 'rx_logistic_regression'.
-For now batch predictions by calling rx_predict. 
-Use another example instead for native scoring. This sample is good for showing PREDICT:
-https://github.com/Microsoft/r-server-hospital-length-of-stay
-*/
 
 --Try sp_rxPredict
 sp_configure 'show advanced options', 1;  
@@ -282,3 +259,26 @@ exec sp_rxPredict @model = @model_bin, @inputData = N'select pr_review_content, 
 go 
 --8,999 rows: sp_rxPredict 3-9sec vs python microsoftml rx_predict 11-25sec.
 --if dot net framework error redeploy assemblies.
+
+/*
+Incase of OutOfMemoryException: https://docs.microsoft.com/sql/advanced-analytics/r/how-to-create-a-resource-pool-for-r?view=sql-server-2017
+1. Limit SQL Server memory usage to 60% of the value in the 'max server memory' setting.
+2. Increase Limit memory by external processes to 40% of total computer resources. It defaults to 20%.
+3. Reconfigure and restart RG to force changes or restart sql svc.
+ALTER RESOURCE POOL "default" WITH (max_memory_percent = 60); --hmmm...maybe not.
+ALTER EXTERNAL RESOURCE POOL "default" WITH (max_memory_percent = 40); --okay
+ALTER RESOURCE GOVERNOR RECONFIGURE;
+*/
+/*
+exec uspPredictSentiment @model='RevoMMLRealtimeScoring'
+go
+Msg 39051, Level 16, State 2, Procedure uspPredictSentiment, Line 304
+Error occurred during execution of the builtin function 'PREDICT' with HRESULT 0x80070057. Model is corrupt or invalid.
+
+This is currently not supported.
+'rx_logistic_regression' is an algorithm from the mml package, not revoscalepy package.
+Cannot demo TSQL PREDICT with a model from 'rx_logistic_regression'.
+For now batch predictions by calling rx_predict. 
+Use another example instead for native scoring. This sample is good for showing PREDICT:
+https://github.com/Microsoft/r-server-hospital-length-of-stay
+*/
