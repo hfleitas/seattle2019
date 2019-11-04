@@ -1,9 +1,0 @@
-SQL Server 2019: https://www.microsoft.com/en-us/sql-server/sql-server-2019 (aka.ms/ss19)
-https://www.microsoft.com/en-us/sql-server/sql-server-2019
-Azure Arc: https://azure.microsoft.com/en-us/blog/azure-services-now-run-anywhere-with-new-hybrid-capabilities-announcing-azure-arc (aka.ms/hybrid)
-Azure Synapse Analytics: https://azure.microsoft.com/en-us/services/synapse-analytics 
-Project Silica: https://www.pcworld.com/article/3451716/microsofts-project-silica-targets-glass-as-the-archival-storage-medium-of-the-future.html
-
-2015: 43% job openings for software engineers
-2019: 61% of jobs for developers are outside of tech sector.
-Developers are at the center of innovation.
