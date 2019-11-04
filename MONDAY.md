@@ -10,6 +10,7 @@
 Developers are at the center of innovation.
 
 [Azure Data Studio Release](https://docs.microsoft.com/en-us/sql/azure-data-studio/release-notes-azure-data-studio)
+[SSMS 18.4 Release](https://docs.microsoft.com/en-us/sql/ssms/release-notes-ssms)
 
 Channel 9 Videos:
 1. [How to prepare data using wrangling data flows](https://channel9.msdn.com/Shows/Azure-Friday/How-to-prepare-data-using-wrangling-data-flows-in-Azure-Data-Factory?wt.mc_id=DX_880918)
