@@ -97,7 +97,7 @@ go
 drop table if exists models
 go
 create table models (
-	 language		varchar(30) not null --default('Python')
+	 language		varchar(30) not null
 	,model_name		varchar(30) not null
 	,model			varbinary(max) 
 	,create_time	datetime default(getdate())
@@ -204,6 +204,8 @@ go
 exec predict_review_sentiment
 go
 
+alter table models add default 'Python' for language;
+go
 -- Create new model for realtime_scoring_only.
 create or alter proc CreatePyModelRealtimeScoringOnly as
 	
@@ -237,7 +239,7 @@ rx_write_object(dest, key_name="model_name", key="RevoMMLRealtimeScoring", value
 go
 exec  CreatePyModelRealtimeScoringOnly; --00:01:14.560 desktop, 00:02:40.351 laptop.
 select *, datalength(model) as Datalen from dbo.models; --(6MB w/rx_write_object vs 55MB w/pickle.dump)
-GO
+go
 -- incase of OutOfMemoryException: https://docs.microsoft.com/sql/advanced-analytics/r/how-to-create-a-resource-pool-for-r?view=sql-server-2017
 -- 1. Limit SQL Server memory usage to 60% of the value in the 'max server memory' setting.
 -- 2. Increase Limit memory by external processes to 40% of total computer resources. It defaults to 20%.
@@ -246,10 +248,12 @@ GO
 --ALTER EXTERNAL RESOURCE POOL "default" WITH (max_memory_percent = 40); --okay
 --ALTER RESOURCE GOVERNOR RECONFIGURE;
 go
--- STEP 10 Execute the multi class prediction using the realtime_scoring_only model we trained now.
+
+
+/*
 exec uspPredictSentiment @model='RevoMMLRealtimeScoring'
 go
-/*Msg 39051, Level 16, State 2, Procedure uspPredictSentiment, Line 304
+Msg 39051, Level 16, State 2, Procedure uspPredictSentiment, Line 304
 Error occurred during execution of the builtin function 'PREDICT' with HRESULT 0x80070057. Model is corrupt or invalid.
 
 This is currently not supported.
@@ -259,7 +263,8 @@ For now batch predictions by calling rx_predict.
 Use another example instead for native scoring. This sample is good for showing PREDICT:
 https://github.com/Microsoft/r-server-hospital-length-of-stay
 */
--- Try sp_rxPredict, if missing, enable it: https://docs.microsoft.com/sql/advanced-analytics/r/how-to-do-realtime-scoring?view=sql-server-2017#bkmk_enableRtScoring
+
+--Try sp_rxPredict
 sp_configure 'show advanced options', 1;  
 reconfigure;
 go
@@ -274,17 +279,6 @@ declare @model_bin varbinary(max)=null
 select	@model_bin = model from models where model_name = 'RevoMMLRealtimeScoring';
 if @model_bin is not null begin
 exec sp_rxPredict @model = @model_bin, @inputData = N'select pr_review_content, cast(tag as varchar(1)) as tag from product_reviews_test_data' end;
-go --8,999 rows: sp_rxPredict 3-9sec vs python microsoftml rx_predict 11-25sec.
-/*
-Known issue: sp_rxPredict returns an inaccurate message when a NULL value is passed as the model.
-
-Msg 6522, Level 16, State 1, Procedure sp_rxPredict, Line 334
-A .NET Framework error occurred during execution of user-defined routine or aggregate "sp_rxPredict": 
-System.InvalidOperationException: Expect a column 'tag' of type: 'String'. Actual type is: 'System.Int32'
-System.InvalidOperationException: 
-   at Microsoft.MachineLearning.RServerScoring.DataViewAdapter.CheckSame(IEnumerator`1 cols1, IEnumerator`1 cols2)
-   at Microsoft.MachineLearning.RServerScoring.DataViewAdapter.Retarget(IDataTable newSource)
-   at Microsoft.MachineLearning.RServerScoring.Model.Score(IDataTable inputData)
-   at Microsoft.MachineLearning.RServerScoring.Scorer.Score(IModel model, IDataTable inputData, IDictionary`2 scoringParameters, IScoreContext scoreContext)
-   at Microsoft.RServer.ScoringLibrary.ScoringHost.ScoreDispatcher.Score(ModelId modelId, IDataTable inputData, IDictionary`2 scoringParameters, IScoreContext scoreContext)
-.*/
+go 
+--8,999 rows: sp_rxPredict 3-9sec vs python microsoftml rx_predict 11-25sec.
+--if dot net framework error redeploy assemblies.
