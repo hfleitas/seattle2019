@@ -7,8 +7,8 @@ else begin
 	print N'rollup your compat, may need to update stats, if comming from < 2016.' 
 end
 
-use FleitasArts
--- use tpcxbb_1gb
+-- use FleitasArts
+use tpcxbb_1gb
 go
 drop procedure if exists sp_rxPredict;
 
