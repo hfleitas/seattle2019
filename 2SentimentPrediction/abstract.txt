@@ -1,0 +1,24 @@
+5 DEMOS
+1. Setup 
+  * Add ML Features
+  * Grant Access & Configure
+  * Install Pre-Trained Models  
+2. Debugging
+  * Requirements.txt
+  * Common Vulnerabilities
+  * Python Profiling
+3. Performance
+  * In-Database ML
+  * realtime_scoring_only = True
+  * sp_rxPredict
+  * Performance Metrics
+4. Cognitive API
+  * (T-SQL) for json path
+  * (Python) json_normalize
+  * CognitiveAPI.ipynb
+  * Trollhunters.ipynb
+  * (PDF) TrumpUkraine.ipynb
+5. Spark Streaming
+  * Paginated Report
+  * Ethics and Terms
+  * Streaming (Spark in BDC)
