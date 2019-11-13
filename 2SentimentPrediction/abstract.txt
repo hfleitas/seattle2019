@@ -19,6 +19,7 @@
   * Trollhunters.ipynb
   * (PDF) TrumpUkraine.ipynb
 5. Spark Streaming
+  * HammerDB
   * Paginated Report
   * Ethics and Terms
   * Streaming (Spark in BDC)
