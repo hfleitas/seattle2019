@@ -14,8 +14,7 @@ https://cloudblogs.microsoft.com/sqlserver/2019/11/18/reflections-on-pass-summit
 ## Photos
 https://twitter.com/tarah/status/1195413694831824898/photo/1
 https://twitter.com/maggiesMSFT/status/1192615301738688512/photo/1
- 
- 
+
 ### With engineering team:
 https://share.icloud.com/photos/0_vnIz7E1ZAAngruWC5TqD4Tg
  
