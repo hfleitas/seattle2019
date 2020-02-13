@@ -36,7 +36,7 @@ BIO
 
 Hiram Fleitas develops and manages database applications and AI bots using Machine Learning models trained on natural language, claims, policy, and social media data to predict business opportunities that grow customer satisfaction and loyalty in real-time.
 
-He's worked with SQL Server for over 20 years, with some of the largest companies in the world. He's spoken on SQL Server, Azure and Power BI at User Groups, Code Camps, SQLSaturdays, and corporate events. He coded his first program in BASIC at 13 years old and developed a passion for computers ever since.
+He's worked with SQL Server for over 20 years, with some of the largest companies in the world. He's spoken on SQL Server, Azure and Power BI at User Groups, Code Camps, SQLSaturdays, Global AI Bootcamps, PASS Summit and corporate events. He coded his first program in BASIC at 13 years old and developed a passion for computers ever since.
 
 Hiram is also a code contributor to several open source projects and serves as the IS Flotilla Staff Officer for the United States Coast Guard Auxiliary.
 
