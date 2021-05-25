@@ -1,3 +1,5 @@
+## [Live Recording on YouTube](https://youtu.be/vWrfArA_HkQ)
+
 # PASS Insights
 ![cover](https://github.com/hfleitas/SentimentPrediction/blob/master/PASSInsights201908-Dev/cover.png)
 
