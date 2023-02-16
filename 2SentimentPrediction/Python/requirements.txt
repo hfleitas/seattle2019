@@ -20,7 +20,7 @@ cloudpickle==0.6.1
 colorama==0.4.1
 conda==4.6.8
 configobj==5.0.6
-cryptography==3.3.2
+cryptography==39.0.1
 cycler==0.10.0
 Cython==0.29.2
 cytoolz==0.9.0.1
@@ -43,7 +43,7 @@ imageio==2.5.0
 imagesize==1.1.0
 importlib-metadata==0.0.0
 ipykernel==5.1.0
-ipython==7.2.0
+ipython==8.10.0
 ipython-genutils==0.2.0
 ipywidgets==7.4.2
 itsdangerous==1.1.0
@@ -54,7 +54,7 @@ jsonschema==2.6.0
 jupyter==1.0.0
 jupyter-client==5.2.4
 jupyter-console==6.0.0
-jupyter-core==4.4.0
+jupyter-core==4.11.2
 kiwisolver==1.0.1
 liac-arff==2.4.0
 llvmlite==0.27.0
@@ -154,7 +154,7 @@ urllib3==1.26.5
 wcwidth==0.1.7
 webencodings==0.5.1
 Werkzeug==2.2.3
-wheel==0.32.3
+wheel==0.38.1
 widgetsnbextension==3.4.2
 wincertstore==0.2
 win-inet-pton==1.0.1
