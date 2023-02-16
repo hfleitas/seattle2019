@@ -75,7 +75,7 @@ multipledispatch==0.6.0
 nbconvert==6.5.1
 nbformat==4.4.0
 networkx==2.2
-nltk==3.6.5
+nltk==3.6.6
 notebook==6.4.12
 numba==0.42.0
 numexpr==2.6.9
