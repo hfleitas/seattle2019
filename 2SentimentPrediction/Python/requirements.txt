@@ -70,7 +70,7 @@ mkl-fft==1.0.10
 mkl-random==1.0.2
 more-itertools==6.0.0
 mpmath==1.1.0
-msgpack==0.6.1
+msgpack==1.2.1
 multipledispatch==0.6.0
 nbconvert==6.5.1
 nbformat==4.4.0
